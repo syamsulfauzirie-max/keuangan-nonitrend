@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -8,20 +9,26 @@
 <title>Keuangan NONITREND</title>
 <style>
 :root{--green:#176b45;--bg:#f3f6f4;--card:#fff;--muted:#68756e;--line:#e2e9e4;--red:#b42318;--amber:#9a6700}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17231c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17231c}
 header{background:var(--green);color:white;padding:20px 16px 24px;border-radius:0 0 22px 22px}
-header h1{margin:0;font-size:21px}header p{margin:5px 0 0;color:#d8eee2;font-size:13px}
+header h1{margin:0;font-size:21px}
+header p{margin:5px 0 0;color:#d8eee2;font-size:13px}
 main{max-width:760px;margin:auto;padding:14px 14px 90px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:-8px}
 .card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 2px 8px #14291b08}
-.klabel{font-size:12px;color:var(--muted)}.amount{font-size:20px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}
-.green{color:var(--green)}.red{color:var(--red)}.amber{color:var(--amber)}
+.klabel{font-size:12px;color:var(--muted)}
+.amount{font-size:20px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.amber{color:var(--amber)}
 nav{display:flex;gap:8px;overflow:auto;margin:16px 0}
 nav button{white-space:nowrap;border:1px solid var(--line);background:white;color:#34443a;border-radius:999px;padding:10px 14px;font-weight:650}
 nav button.active{background:var(--green);color:white;border-color:var(--green)}
 h2{font-size:17px;margin:4px 0 12px}
 label{display:block;font-size:13px;font-weight:650;margin:12px 0 5px}
 input,select,textarea{width:100%;padding:12px;border:1px solid #ccd8d0;border-radius:10px;background:white;font:inherit;color:#17231c}
+input.money{font-variant-numeric:tabular-nums}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 button.primary{width:100%;background:var(--green);color:white;border:0;border-radius:11px;padding:13px;font-weight:750;font-size:15px;margin-top:16px}
 button.secondary,.smallbtn{background:white;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-weight:650;color:#26372d}
@@ -30,9 +37,12 @@ button.secondary,.smallbtn{background:white;border:1px solid var(--line);border-
 .item{border-top:1px solid var(--line);padding:12px 0}
 .item:first-child{border-top:0}
 .itemtop{display:flex;justify-content:space-between;gap:8px}
-.item strong{font-size:14px}.meta{font-size:12px;color:var(--muted);margin-top:4px}
+.item strong{font-size:14px}
+.meta{font-size:12px;color:var(--muted);margin-top:4px}
 .pill{display:inline-block;border-radius:99px;padding:3px 8px;font-size:11px;font-weight:700;background:#eef3ef}
-.pill.pending{background:#fff4d6;color:#805b00}.pill.success{background:#e3f5e9;color:#176b45}.pill.failed{background:#ffebe9;color:#b42318}
+.pill.pending{background:#fff4d6;color:#805b00}
+.pill.success{background:#e3f5e9;color:#176b45}
+.pill.failed{background:#ffebe9;color:#b42318}
 .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .empty{color:var(--muted);font-size:13px;text-align:center;padding:22px}
 hr{border:0;border-top:1px solid var(--line);margin:14px 0}
@@ -40,121 +50,439 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 </style>
 </head>
 <body>
-<header><h1>HERBAL.BDG · NONITREND</h1><p>Pencatatan keuangan penjualan dan pengeluaran</p></header>
+
+<header>
+<h1>HERBAL.BDG · NONITREND</h1>
+<p>Pencatatan keuangan penjualan dan pengeluaran</p>
+</header>
+
 <main>
 <section class="grid">
- <div class="card"><div class="klabel">Uang diterima</div><div class="amount green" id="received">Rp0</div></div>
- <div class="card"><div class="klabel">COD pending</div><div class="amount amber" id="pending">Rp0</div></div>
- <div class="card"><div class="klabel">Total modal barang</div><div class="amount" id="capital">Rp0</div></div>
- <div class="card"><div class="klabel">Laba terealisasi*</div><div class="amount green" id="profit">Rp0</div></div>
+<div class="card"><div class="klabel">Uang diterima</div><div class="amount green" id="received">Rp0</div></div>
+<div class="card"><div class="klabel">COD pending</div><div class="amount amber" id="pending">Rp0</div></div>
+<div class="card"><div class="klabel">Total modal barang</div><div class="amount" id="capital">Rp0</div></div>
+<div class="card"><div class="klabel">Laba terealisasi*</div><div class="amount green" id="profit">Rp0</div></div>
 </section>
+
 <nav>
 <button class="active" data-tab="dashboard">Ringkasan</button>
 <button data-tab="sale">+ Penjualan</button>
 <button data-tab="expense">+ Pengeluaran</button>
 <button data-tab="history">Riwayat</button>
 </nav>
+
 <section id="dashboard" class="tab">
- <div class="panel"><h2>Ringkasan transaksi</h2>
- <div class="row"><div><div class="klabel">Jumlah penjualan</div><div class="amount" id="salesCount">0</div></div><div><div class="klabel">Biaya pengeluaran lain</div><div class="amount" id="otherExpense">Rp0</div></div></div>
- <p class="help">*Laba terealisasi dihitung dari transaksi TF dan COD berhasil: pembayaran diterima dikurangi modal barang, ongkir, dan pengeluaran lain. COD pending belum masuk uang diterima.</p>
- </div>
- <div class="panel" style="margin-top:12px"><h2>Aturan perhitungan</h2>
- <p class="help">Modal barang otomatis Rp170.000 per pcs. Harga transaksi diisi sesuai kesepakatan. Ongkir selalu diisi manual. Untuk COD, total tagihan yang diisi sudah termasuk ongkir dan ongkir dikurangi dari laba. Untuk TF, nominal transfer produk diisi dan ongkir yang kamu tanggung dikurangi dari laba.</p>
- </div>
+<div class="panel">
+<h2>Ringkasan transaksi</h2>
+<div class="row">
+<div><div class="klabel">Jumlah penjualan</div><div class="amount" id="salesCount">0</div></div>
+<div><div class="klabel">Biaya pengeluaran lain</div><div class="amount" id="otherExpense">Rp0</div></div>
+</div>
+<p class="help">*Laba terealisasi dihitung dari transaksi TF dan COD berhasil: pembayaran diterima dikurangi modal barang, ongkir, dan pengeluaran lain. COD pending belum masuk uang diterima.</p>
+</div>
+
+<div class="panel" style="margin-top:12px">
+<h2>Aturan perhitungan</h2>
+<p class="help">Modal barang otomatis Rp170.000 per pcs. Harga transaksi diisi sesuai kesepakatan. Ongkir selalu diisi manual. Untuk COD, total tagihan yang diisi sudah termasuk ongkir dan ongkir dikurangi dari laba. Untuk TF, nominal transfer produk diisi dan ongkir yang kamu tanggung dikurangi dari laba.</p>
+</div>
 </section>
+
 <section id="sale" class="tab hidden">
- <div class="panel"><h2>Catat penjualan</h2>
- <form id="saleForm">
- <label>Nama pembeli</label><input id="buyer" required placeholder="Nama pembeli">
- <div class="row">
-  <div><label>Tanggal</label><input id="saleDate" type="date" required></div>
-  <div><label>Jumlah barang (pcs)</label><input id="qty" type="number" min="1" step="1" value="1" required></div>
- </div>
- <label>Metode pembayaran</label><select id="method"><option value="TF">Transfer (TF)</option><option value="COD">COD</option></select>
- <label id="totalLabel">Nominal transfer produk (Rp)</label><input id="total" type="number" min="0" step="1000" required placeholder="Contoh: 300000">
- <div class="help" id="totalHelp">Untuk TF, isi nominal pembayaran produk. Ongkir yang kamu tanggung dicatat terpisah di bawah.</div>
- <label>Ongkir (Rp)</label><input id="shipping" type="number" min="0" step="1000" value="0" required>
- <div class="help" id="shipHelp">Ongkir ditanggung penjual untuk transaksi TF.</div>
- <label>Status transaksi</label><select id="status"><option value="success">Diterima / berhasil</option><option value="pending">Pending</option><option value="failed">Gagal</option></select>
- <label>Catatan (opsional)</label><input id="note" placeholder="Nomor resi, catatan, dll.">
- <div class="panel" style="margin-top:14px;background:#f7faf8">
-  <div class="row"><div><div class="klabel">Modal otomatis</div><strong id="previewCapital">Rp170.000</strong></div><div><div class="klabel">Estimasi laba</div><strong class="green" id="previewProfit">Rp130.000</strong></div></div>
-  <div class="help" id="previewRule">Estimasi: nominal produk − ongkir − modal.</div>
- </div>
- <button class="primary" type="submit">Simpan penjualan</button>
- </form></div>
+<div class="panel">
+<h2>Catat penjualan</h2>
+<form id="saleForm">
+
+<label>Nama pembeli</label>
+<input id="buyer" required placeholder="Nama pembeli">
+
+<div class="row">
+<div>
+<label>Tanggal</label>
+<input id="saleDate" type="date" required>
+</div>
+<div>
+<label>Jumlah barang (pcs)</label>
+<input id="qty" type="number" min="1" step="1" value="1" required>
+</div>
+</div>
+
+<label>Metode pembayaran</label>
+<select id="method">
+<option value="TF">Transfer (TF)</option>
+<option value="COD">COD</option>
+</select>
+
+<label id="totalLabel">Nominal transfer produk (Rp)</label>
+<input id="total" class="money" type="text" inputmode="numeric" autocomplete="off" required placeholder="Rp 300.000">
+
+<div class="help" id="totalHelp">Untuk TF, isi nominal pembayaran produk. Ongkir yang kamu tanggung dicatat terpisah di bawah.</div>
+
+<label>Ongkir (Rp)</label>
+<input id="shipping" class="money" type="text" inputmode="numeric" autocomplete="off" value="Rp 0" required>
+
+<div class="help" id="shipHelp">Ongkir ditanggung penjual untuk transaksi TF.</div>
+
+<label>Status transaksi</label>
+<select id="status">
+<option value="success">Diterima / berhasil</option>
+<option value="pending">Pending</option>
+<option value="failed">Gagal</option>
+</select>
+
+<label>Catatan (opsional)</label>
+<input id="note" placeholder="Nomor resi, catatan, dll.">
+
+<div class="panel" style="margin-top:14px;background:#f7faf8">
+<div class="row">
+<div><div class="klabel">Modal otomatis</div><strong id="previewCapital">Rp170.000</strong></div>
+<div><div class="klabel">Estimasi laba</div><strong class="green" id="previewProfit">Rp130.000</strong></div>
+</div>
+<div class="help" id="previewRule">Estimasi: nominal produk − ongkir − modal.</div>
+</div>
+
+<button class="primary" type="submit">Simpan penjualan</button>
+</form>
+</div>
 </section>
+
 <section id="expense" class="tab hidden">
- <div class="panel"><h2>Catat pengeluaran lain</h2>
- <form id="expenseForm">
- <label>Keterangan</label><input id="expenseName" required placeholder="Contoh: iklan, bensin, biaya admin">
- <div class="row"><div><label>Tanggal</label><input id="expenseDate" type="date" required></div><div><label>Jumlah (Rp)</label><input id="expenseAmount" type="number" min="1" required placeholder="50000"></div></div>
- <button class="primary" type="submit">Simpan pengeluaran</button>
- </form>
- <p class="help">Modal barang dan ongkir penjualan sudah dicatat di transaksi penjualan. Jangan masukkan biaya yang sama dua kali.</p>
- </div>
+<div class="panel">
+<h2>Catat pengeluaran lain</h2>
+<form id="expenseForm">
+<label>Keterangan</label>
+<input id="expenseName" required placeholder="Contoh: iklan, bensin, biaya admin">
+
+<div class="row">
+<div>
+<label>Tanggal</label>
+<input id="expenseDate" type="date" required>
+</div>
+<div>
+<label>Jumlah (Rp)</label>
+<input id="expenseAmount" class="money" type="text" inputmode="numeric" autocomplete="off" required placeholder="Rp 50.000">
+</div>
+</div>
+
+<button class="primary" type="submit">Simpan pengeluaran</button>
+</form>
+<p class="help">Modal barang dan ongkir penjualan sudah dicatat di transaksi penjualan. Jangan masukkan biaya yang sama dua kali.</p>
+</div>
 </section>
+
 <section id="history" class="tab hidden">
- <div class="panel"><h2>Riwayat penjualan</h2><div id="salesList"></div><hr><h2>Riwayat pengeluaran lain</h2><div id="expensesList"></div></div>
- <div class="panel" style="margin-top:12px"><h2>Cadangkan data</h2><p class="help">Ekspor CSV untuk dibuka di Excel. Simpan cadangan secara berkala. Data tersimpan di browser/perangkat ini.</p><button class="secondary" id="exportBtn">Ekspor CSV</button> <button class="secondary" id="backupBtn">Unduh backup JSON</button><label class="smallbtn" style="display:inline-block;margin-left:4px">Pulihkan backup<input id="restoreFile" type="file" accept=".json,application/json" style="display:none"></label></div>
+<div class="panel">
+<h2>Riwayat penjualan</h2>
+<div id="salesList"></div>
+<hr>
+<h2>Riwayat pengeluaran lain</h2>
+<div id="expensesList"></div>
+</div>
+
+<div class="panel" style="margin-top:12px">
+<h2>Cadangkan data</h2>
+<p class="help">Ekspor CSV untuk dibuka di Excel. Simpan cadangan secara berkala. Data tersimpan di browser/perangkat ini.</p>
+<button class="secondary" id="exportBtn">Ekspor CSV</button>
+<button class="secondary" id="backupBtn">Unduh backup JSON</button>
+<label class="smallbtn" style="display:inline-block;margin-left:4px">
+Pulihkan backup
+<input id="restoreFile" type="file" accept=".json,application/json" style="display:none">
+</label>
+</div>
 </section>
 </main>
+
 <script>
 const KEY='nonitrend_finance_v1', UNIT=170000;
+
 let db=load();
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||{sales:[],expenses:[]}}catch(e){return {sales:[],expenses:[]}}}
-function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+
+function load(){
+try{
+return JSON.parse(localStorage.getItem(KEY))||{sales:[],expenses:[]};
+}catch(e){
+return {sales:[],expenses:[]};
+}
+}
+
+function save(){
+localStorage.setItem(KEY,JSON.stringify(db));
+render();
+}
+
 const rupiah=n=>'Rp'+Math.round(Number(n)||0).toLocaleString('id-ID');
-const val=id=>Number(document.getElementById(id).value)||0;
-const today=new Date().toISOString().slice(0,10);
-document.getElementById('saleDate').value=today;document.getElementById('expenseDate').value=today;
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));if(b.dataset.tab==='history')render()}));
-function updateMethod(){
- const cod=document.getElementById('method').value==='COD';
- document.getElementById('totalLabel').textContent=cod?'Total tagihan COD (sudah termasuk ongkir) (Rp)':'Nominal transfer produk (Rp)';
- document.getElementById('totalHelp').textContent=cod?'Isi total yang dibayar pembeli ke ekspedisi, termasuk ongkir.':'Isi nominal pembayaran produk yang ditransfer pembeli. Ongkir yang kamu tanggung dicatat terpisah.';
- document.getElementById('shipHelp').textContent=cod?'Ongkir ditanggung pembeli, tetapi tetap dicatat untuk menghitung laba.':'Ongkir ditanggung kamu dan mengurangi laba.';
- document.getElementById('status').value=cod?'pending':'success';
- updatePreview();
+
+const val=id=>{
+const el=document.getElementById(id);
+if(el.classList.contains('money')){
+return Number(el.value.replace(/[^0-9]/g,''))||0;
 }
-function updatePreview(){
- const q=val('qty'), total=val('total'), ship=val('shipping'), cod=document.getElementById('method').value==='COD';
- const cap=q*UNIT, profit=cod?total-ship-cap:total-ship-cap;
- document.getElementById('previewCapital').textContent=rupiah(cap);
- document.getElementById('previewProfit').textContent=rupiah(profit);
- document.getElementById('previewRule').textContent=cod?'Estimasi laba: total COD − ongkir − modal barang.':'Estimasi laba: nominal transfer produk − ongkir − modal barang.';
-}
-['qty','total','shipping','method'].forEach(id=>document.getElementById(id).addEventListener('input',id==='method'?updateMethod:updatePreview));
-document.getElementById('saleForm').addEventListener('submit',e=>{
- e.preventDefault();const method=document.getElementById('method').value,status=document.getElementById('status').value;
- const sale={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),buyer:document.getElementById('buyer').value.trim(),date:document.getElementById('saleDate').value,qty:val('qty'),method,total:val('total'),shipping:val('shipping'),status,note:document.getElementById('note').value.trim(),capital:val('qty')*UNIT};
- db.sales.unshift(sale);save();e.target.reset();document.getElementById('saleDate').value=today;document.getElementById('qty').value=1;document.getElementById('shipping').value=0;updateMethod();alert('Penjualan tersimpan.');showTab('history');
-});
-document.getElementById('expenseForm').addEventListener('submit',e=>{e.preventDefault();db.expenses.unshift({id:Date.now().toString(),name:document.getElementById('expenseName').value.trim(),date:document.getElementById('expenseDate').value,amount:val('expenseAmount')});save();e.target.reset();document.getElementById('expenseDate').value=today;alert('Pengeluaran tersimpan.');showTab('history')});
-function showTab(id){document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==id));}
-function revenue(s){return s.status==='success'?s.total:0}
-function profit(s){return s.status==='success'?s.total-s.shipping-s.capital:0}
-function render(){
- const received=db.sales.reduce((a,s)=>a+revenue(s),0), pending=db.sales.filter(s=>s.status==='pending').reduce((a,s)=>a+s.total,0), capital=db.sales.filter(s=>s.status==='success').reduce((a,s)=>a+s.capital,0), other=db.expenses.reduce((a,x)=>a+x.amount,0), p=db.sales.reduce((a,s)=>a+profit(s),0)-other;
- document.getElementById('received').textContent=rupiah(received);document.getElementById('pending').textContent=rupiah(pending);document.getElementById('capital').textContent=rupiah(capital);document.getElementById('profit').textContent=rupiah(p);document.getElementById('salesCount').textContent=db.sales.length;document.getElementById('otherExpense').textContent=rupiah(other);
- document.getElementById('salesList').innerHTML=db.sales.length?db.sales.map(s=>`<div class="item"><div class="itemtop"><strong>${esc(s.buyer)} · ${s.qty} pcs</strong><span class="pill ${s.status}">${s.status==='success'?'Berhasil':s.status==='pending'?'Pending':'Gagal'}</span></div><div class="meta">${s.date} · ${s.method} · Total ${rupiah(s.total)} · Ongkir ${rupiah(s.shipping)} · Modal ${rupiah(s.capital)}</div><div class="meta">Laba jika berhasil: ${rupiah(s.total-s.shipping-s.capital)} ${s.note?'· '+esc(s.note):''}</div><div class="actions">${s.status!=='success'?`<button class="smallbtn" onclick="setStatus('${s.id}','success')">Tandai berhasil</button>`:''}${s.status!=='pending'?`<button class="smallbtn" onclick="setStatus('${s.id}','pending')">Jadikan pending</button>`:''}${s.status!=='failed'?`<button class="smallbtn" onclick="setStatus('${s.id}','failed')">Tandai gagal</button>`:''}<button class="smallbtn" onclick="removeSale('${s.id}')">Hapus</button></div></div>`).join(''):'<div class="empty">Belum ada penjualan.</div>';
- document.getElementById('expensesList').innerHTML=db.expenses.length?db.expenses.map(x=>`<div class="item"><div class="itemtop"><strong>${esc(x.name)}</strong><strong class="red">${rupiah(x.amount)}</strong></div><div class="meta">${x.date}</div><div class="actions"><button class="smallbtn" onclick="removeExpense('${x.id}')">Hapus</button></div></div>`).join(''):'<div class="empty">Belum ada pengeluaran lain.</div>';
-}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function setStatus(id,status){const s=db.sales.find(x=>x.id===id);if(s){s.status=status;save()}}
-function removeSale(id){if(confirm('Hapus transaksi ini?')){db.sales=db.sales.filter(x=>x.id!==id);save()}}
-function removeExpense(id){if(confirm('Hapus pengeluaran ini?')){db.expenses=db.expenses.filter(x=>x.id!==id);save()}}
-document.getElementById('exportBtn').onclick=()=>{
- let rows=[['Jenis','Tanggal','Nama/Keterangan','Metode','Status','Jumlah pcs','Total pembayaran','Ongkir','Modal barang','Laba terealisasi']];
- db.sales.forEach(s=>rows.push(['Penjualan',s.date,s.buyer,s.method,s.status,s.qty,s.total,s.shipping,s.capital,profit(s)]));
- db.expenses.forEach(x=>rows.push(['Pengeluaran',x.date,x.name,'','','',x.amount,0,0,-x.amount]));
- const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');download(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'laporan_nonitrend.csv');
+return Number(el.value)||0;
 };
-document.getElementById('backupBtn').onclick=()=>download(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),'backup_nonitrend.json');
-document.getElementById('restoreFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.sales)||!Array.isArray(d.expenses))throw 0;if(confirm('Pulihkan backup? Data saat ini akan diganti.')){db=d;save();alert('Backup berhasil dipulihkan.')}}catch(_){alert('File backup tidak valid.')}e.target.value=''};
-function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
-updateMethod();render();
+
+/* FORMAT NOMINAL RUPIAH */
+function formatMoneyInput(el){
+const digits=el.value.replace(/[^0-9]/g,'');
+el.value=digits?'Rp '+Number(digits).toLocaleString('id-ID'):'';
+try{
+el.setSelectionRange(el.value.length,el.value.length);
+}catch(_){}
+}
+
+document.querySelectorAll('input.money').forEach(el=>{
+el.addEventListener('input',()=>{
+formatMoneyInput(el);
+updatePreview();
+});
+el.addEventListener('blur',()=>{
+if(!el.value)el.value='Rp 0';
+});
+});
+
+const today=new Date().toISOString().slice(0,10);
+document.getElementById('saleDate').value=today;
+document.getElementById('expenseDate').value=today;
+
+document.querySelectorAll('nav button').forEach(b=>{
+b.addEventListener('click',()=>{
+document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));
+document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));
+if(b.dataset.tab==='history')render();
+});
+});
+
+function updateMethod(){
+const cod=document.getElementById('method').value==='COD';
+
+document.getElementById('totalLabel').textContent=
+cod?'Total tagihan COD (sudah termasuk ongkir) (Rp)':'Nominal transfer produk (Rp)';
+
+document.getElementById('totalHelp').textContent=
+cod?'Isi total yang dibayar pembeli ke ekspedisi, termasuk ongkir.':'Isi nominal pembayaran produk yang ditransfer pembeli. Ongkir yang kamu tanggung dicatat terpisah.';
+
+document.getElementById('shipHelp').textContent=
+cod?'Ongkir ditanggung pembeli, tetapi tetap dicatat untuk menghitung laba.':'Ongkir ditanggung kamu dan mengurangi laba.';
+
+document.getElementById('status').value=cod?'pending':'success';
+
+updatePreview();
+}
+
+function updatePreview(){
+const q=val('qty');
+const total=val('total');
+const ship=val('shipping');
+const cod=document.getElementById('method').value==='COD';
+
+const cap=q*UNIT;
+const profit=total-ship-cap;
+
+document.getElementById('previewCapital').textContent=rupiah(cap);
+document.getElementById('previewProfit').textContent=rupiah(profit);
+
+document.getElementById('previewRule').textContent=
+cod?'Estimasi laba: total COD − ongkir − modal barang.':'Estimasi laba: nominal transfer produk − ongkir − modal barang.';
+}
+
+['qty','method'].forEach(id=>{
+document.getElementById(id).addEventListener('input',
+id==='method'?updateMethod:updatePreview);
+});
+
+document.getElementById('saleForm').addEventListener('submit',e=>{
+e.preventDefault();
+
+const method=document.getElementById('method').value;
+const status=document.getElementById('status').value;
+
+const sale={
+id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),
+buyer:document.getElementById('buyer').value.trim(),
+date:document.getElementById('saleDate').value,
+qty:val('qty'),
+method,
+total:val('total'),
+shipping:val('shipping'),
+status,
+note:document.getElementById('note').value.trim(),
+capital:val('qty')*UNIT
+};
+
+db.sales.unshift(sale);
+save();
+
+e.target.reset();
+document.getElementById('saleDate').value=today;
+document.getElementById('qty').value=1;
+document.getElementById('total').value='';
+document.getElementById('shipping').value='Rp 0';
+
+updateMethod();
+
+alert('Penjualan tersimpan.');
+showTab('history');
+});
+
+document.getElementById('expenseForm').addEventListener('submit',e=>{
+e.preventDefault();
+
+db.expenses.unshift({
+id:Date.now().toString(),
+name:document.getElementById('expenseName').value.trim(),
+date:document.getElementById('expenseDate').value,
+amount:val('expenseAmount')
+});
+
+save();
+e.target.reset();
+
+document.getElementById('expenseDate').value=today;
+document.getElementById('expenseAmount').value='';
+
+alert('Pengeluaran tersimpan.');
+showTab('history');
+});
+
+function showTab(id){
+document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==id));
+}
+
+function revenue(s){
+return s.status==='success'?s.total:0;
+}
+
+function profit(s){
+return s.status==='success'?s.total-s.shipping-s.capital:0;
+}
+
+function render(){
+
+const received=db.sales.reduce((a,s)=>a+revenue(s),0);
+const pending=db.sales.filter(s=>s.status==='pending').reduce((a,s)=>a+s.total,0);
+const capital=db.sales.filter(s=>s.status==='success').reduce((a,s)=>a+s.capital,0);
+const other=db.expenses.reduce((a,x)=>a+x.amount,0);
+const p=db.sales.reduce((a,s)=>a+profit(s),0)-other;
+
+document.getElementById('received').textContent=rupiah(received);
+document.getElementById('pending').textContent=rupiah(pending);
+document.getElementById('capital').textContent=rupiah(capital);
+document.getElementById('profit').textContent=rupiah(p);
+document.getElementById('salesCount').textContent=db.sales.length;
+document.getElementById('otherExpense').textContent=rupiah(other);
+
+document.getElementById('salesList').innerHTML=db.sales.length?
+db.sales.map(s=>`
+<div class="item">
+<div class="itemtop">
+<strong>${esc(s.buyer)} · ${s.qty} pcs</strong>
+<span class="pill ${s.status}">${s.status==='success'?'Berhasil':s.status==='pending'?'Pending':'Gagal'}</span>
+</div>
+<div class="meta">${s.date} · ${s.method} · Total ${rupiah(s.total)} · Ongkir ${rupiah(s.shipping)} · Modal ${rupiah(s.capital)}</div>
+<div class="meta">Laba jika berhasil: ${rupiah(s.total-s.shipping-s.capital)} ${s.note?'· '+esc(s.note):''}</div>
+<div class="actions">
+${s.status!=='success'?`<button class="smallbtn" onclick="setStatus('${s.id}','success')">Tandai berhasil</button>`:''}
+${s.status!=='pending'?`<button class="smallbtn" onclick="setStatus('${s.id}','pending')">Jadikan pending</button>`:''}
+${s.status!=='failed'?`<button class="smallbtn" onclick="setStatus('${s.id}','failed')">Tandai gagal</button>`:''}
+<button class="smallbtn" onclick="removeSale('${s.id}')">Hapus</button>
+</div>
+</div>`).join(''):
+'<div class="empty">Belum ada penjualan.</div>';
+
+document.getElementById('expensesList').innerHTML=db.expenses.length?
+db.expenses.map(x=>`
+<div class="item">
+<div class="itemtop">
+<strong>${esc(x.name)}</strong>
+<strong class="red">${rupiah(x.amount)}</strong>
+</div>
+<div class="meta">${x.date}</div>
+<div class="actions">
+<button class="smallbtn" onclick="removeExpense('${x.id}')">Hapus</button>
+</div>
+</div>`).join(''):
+'<div class="empty">Belum ada pengeluaran lain.</div>';
+}
+
+function esc(s){
+return String(s).replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+}
+
+function setStatus(id,status){
+const s=db.sales.find(x=>x.id===id);
+if(s){s.status=status;save();}
+}
+
+function removeSale(id){
+if(confirm('Hapus transaksi ini?')){
+db.sales=db.sales.filter(x=>x.id!==id);
+save();
+}
+}
+
+function removeExpense(id){
+if(confirm('Hapus pengeluaran ini?')){
+db.expenses=db.expenses.filter(x=>x.id!==id);
+save();
+}
+}
+
+document.getElementById('exportBtn').onclick=()=>{
+let rows=[['Jenis','Tanggal','Nama/Keterangan','Metode','Status','Jumlah pcs','Total pembayaran','Ongkir','Modal barang','Laba terealisasi']];
+
+db.sales.forEach(s=>rows.push([
+'Penjualan',s.date,s.buyer,s.method,s.status,s.qty,s.total,s.shipping,s.capital,profit(s)
+]));
+
+db.expenses.forEach(x=>rows.push([
+'Pengeluaran',x.date,x.name,'','','',x.amount,0,0,-x.amount
+]));
+
+const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');
+
+download(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'laporan_nonitrend.csv');
+};
+
+document.getElementById('backupBtn').onclick=()=>{
+download(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),'backup_nonitrend.json');
+};
+
+document.getElementById('restoreFile').onchange=async e=>{
+const f=e.target.files[0];
+if(!f)return;
+
+try{
+const d=JSON.parse(await f.text());
+
+if(!Array.isArray(d.sales)||!Array.isArray(d.expenses))throw 0;
+
+if(confirm('Pulihkan backup? Data saat ini akan diganti.')){
+db=d;
+save();
+alert('Backup berhasil dipulihkan.');
+}
+}catch(_){
+alert('File backup tidak valid.');
+}
+
+e.target.value='';
+};
+
+function download(blob,name){
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download=name;
+a.click();
+URL.revokeObjectURL(a.href);
+}
+
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+
+updateMethod();
+render();
 </script>
-</body></html>
+</body>
+</html>

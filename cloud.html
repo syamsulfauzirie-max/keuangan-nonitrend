@@ -275,7 +275,11 @@ const expenseTotal=expenses
 .reduce((a,x)=>a+Number(x.amount),0);
 
 const totalProfit=sales.reduce((a,s)=>a+profit(s),0)-expenseTotal;
-
+const totalShipping=sales
+.filter(s=>s.status!=='failed')
+.reduce((sum,s)=>sum+(s.method==='COD'
+?Math.max(0,Number(s.recipient_bill||0)-Number(s.total||0))
+:Number(s.shipping||0)),0);
 $('received').textContent=rupiah(received);
 $('pending').textContent=rupiah(pending);
 $('capital').textContent=rupiah(capital);

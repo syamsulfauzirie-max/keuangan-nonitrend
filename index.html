@@ -1,14 +1,14 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#176b45">
 <link rel="manifest" href="manifest.json">
 <title>Keuangan NONITREND</title>
+
 <style>
-:root{--green:#176b45;--bg:#f3f6f4;--card:#fff;--muted:#68756e;--line:#e2e9e4;--red:#b42318;--amber:#9a6700}
+:root{--green:#176b45;--bg:#f3f6f4;--line:#e2e9e4;--muted:#68756e;--red:#b42318;--amber:#9a6700}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17231c}
 header{background:var(--green);color:white;padding:20px 16px 24px;border-radius:0 0 22px 22px}
@@ -16,19 +16,16 @@ header h1{margin:0;font-size:21px}
 header p{margin:5px 0 0;color:#d8eee2;font-size:13px}
 main{max-width:760px;margin:auto;padding:14px 14px 90px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:-8px}
-.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 2px 8px #14291b08}
+.card,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 2px 8px #14291b08}
 .klabel{font-size:12px;color:var(--muted)}
 .amount{font-size:20px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}
-.green{color:var(--green)}
-.red{color:var(--red)}
-.amber{color:var(--amber)}
+.green{color:var(--green)}.red{color:var(--red)}.amber{color:var(--amber)}
 nav{display:flex;gap:8px;overflow:auto;margin:16px 0}
 nav button{white-space:nowrap;border:1px solid var(--line);background:white;color:#34443a;border-radius:999px;padding:10px 14px;font-weight:650}
 nav button.active{background:var(--green);color:white;border-color:var(--green)}
 h2{font-size:17px;margin:4px 0 12px}
 label{display:block;font-size:13px;font-weight:650;margin:12px 0 5px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ccd8d0;border-radius:10px;background:white;font:inherit;color:#17231c}
-input.money{font-variant-numeric:tabular-nums}
+input,select{width:100%;padding:12px;border:1px solid #ccd8d0;border-radius:10px;background:white;font:inherit;color:#17231c}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 button.primary{width:100%;background:var(--green);color:white;border:0;border-radius:11px;padding:13px;font-weight:750;font-size:15px;margin-top:16px}
 button.secondary,.smallbtn{background:white;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-weight:650;color:#26372d}
@@ -49,8 +46,8 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 @media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
-<body>
 
+<body>
 <header>
 <h1>HERBAL.BDG · NONITREND</h1>
 <p>Pencatatan keuangan penjualan dan pengeluaran</p>
@@ -78,12 +75,16 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 <div><div class="klabel">Jumlah penjualan</div><div class="amount" id="salesCount">0</div></div>
 <div><div class="klabel">Biaya pengeluaran lain</div><div class="amount" id="otherExpense">Rp0</div></div>
 </div>
-<p class="help">*Laba terealisasi dihitung dari transaksi TF dan COD berhasil: pembayaran diterima dikurangi modal barang, ongkir, dan pengeluaran lain. COD pending belum masuk uang diterima.</p>
+<p class="help">*Laba terealisasi dihitung dari transaksi berhasil. TF: pembayaran produk dikurangi ongkir penjual dan modal. COD baru: pencairan COD dikurangi modal barang. Pengeluaran lain juga dikurangi. COD pending belum masuk uang diterima.</p>
 </div>
 
 <div class="panel" style="margin-top:12px">
 <h2>Aturan perhitungan</h2>
-<p class="help">Modal barang otomatis Rp170.000 per pcs. Harga transaksi diisi sesuai kesepakatan. Ongkir selalu diisi manual. Untuk COD, total tagihan yang diisi sudah termasuk ongkir dan ongkir dikurangi dari laba. Untuk TF, nominal transfer produk diisi dan ongkir yang kamu tanggung dikurangi dari laba.</p>
+<p class="help">
+Modal barang otomatis Rp170.000 per pcs.<br>
+COD: pencairan COD dikurangi modal barang. Tagihan penerima hanya informasi dari resi dan tidak mengurangi laba.<br>
+TF: nominal transfer produk dikurangi ongkir yang kamu tanggung dan modal barang.
+</p>
 </div>
 </section>
 
@@ -114,12 +115,10 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 
 <label id="totalLabel">Nominal transfer produk (Rp)</label>
 <input id="total" class="money" type="text" inputmode="numeric" autocomplete="off" required placeholder="Rp 300.000">
+<div class="help" id="totalHelp">Isi nominal pembayaran produk yang ditransfer pembeli.</div>
 
-<div class="help" id="totalHelp">Untuk TF, isi nominal pembayaran produk. Ongkir yang kamu tanggung dicatat terpisah di bawah.</div>
-
-<label>Ongkir (Rp)</label>
+<label id="shippingLabel">Ongkir (Rp)</label>
 <input id="shipping" class="money" type="text" inputmode="numeric" autocomplete="off" value="Rp 0" required>
-
 <div class="help" id="shipHelp">Ongkir ditanggung penjual untuk transaksi TF.</div>
 
 <label>Status transaksi</label>
@@ -137,7 +136,7 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 <div><div class="klabel">Modal otomatis</div><strong id="previewCapital">Rp170.000</strong></div>
 <div><div class="klabel">Estimasi laba</div><strong class="green" id="previewProfit">Rp130.000</strong></div>
 </div>
-<div class="help" id="previewRule">Estimasi: nominal produk − ongkir − modal.</div>
+<div class="help" id="previewRule">Estimasi: nominal transfer − ongkir − modal.</div>
 </div>
 
 <button class="primary" type="submit">Simpan penjualan</button>
@@ -162,7 +161,6 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 <input id="expenseAmount" class="money" type="text" inputmode="numeric" autocomplete="off" required placeholder="Rp 50.000">
 </div>
 </div>
-
 <button class="primary" type="submit">Simpan pengeluaran</button>
 </form>
 <p class="help">Modal barang dan ongkir penjualan sudah dicatat di transaksi penjualan. Jangan masukkan biaya yang sama dua kali.</p>
@@ -219,13 +217,10 @@ return Number(el.value.replace(/[^0-9]/g,''))||0;
 return Number(el.value)||0;
 };
 
-/* FORMAT NOMINAL RUPIAH */
 function formatMoneyInput(el){
 const digits=el.value.replace(/[^0-9]/g,'');
 el.value=digits?'Rp '+Number(digits).toLocaleString('id-ID'):'';
-try{
-el.setSelectionRange(el.value.length,el.value.length);
-}catch(_){}
+try{el.setSelectionRange(el.value.length,el.value.length)}catch(_){}
 }
 
 document.querySelectorAll('input.money').forEach(el=>{
@@ -254,33 +249,36 @@ function updateMethod(){
 const cod=document.getElementById('method').value==='COD';
 
 document.getElementById('totalLabel').textContent=
-cod?'Total tagihan COD (sudah termasuk ongkir) (Rp)':'Nominal transfer produk (Rp)';
+cod?'Pencairan COD (Rp)':'Nominal transfer produk (Rp)';
 
 document.getElementById('totalHelp').textContent=
-cod?'Isi total yang dibayar pembeli ke ekspedisi, termasuk ongkir.':'Isi nominal pembayaran produk yang ditransfer pembeli. Ongkir yang kamu tanggung dicatat terpisah.';
+cod?'Isi nominal pencairan yang kamu terima dari ekspedisi.':
+'Isi nominal pembayaran produk yang ditransfer pembeli.';
+
+document.getElementById('shippingLabel').textContent=
+cod?'Tagihan Penerima (Rp)':'Ongkir (Rp)';
 
 document.getElementById('shipHelp').textContent=
-cod?'Ongkir ditanggung pembeli, tetapi tetap dicatat untuk menghitung laba.':'Ongkir ditanggung kamu dan mengurangi laba.';
+cod?'Isi tagihan penerima sesuai resi. Hanya informasi, tidak mengurangi laba.':
+'Ongkir ditanggung penjual dan mengurangi laba.';
 
 document.getElementById('status').value=cod?'pending':'success';
-
 updatePreview();
 }
 
 function updatePreview(){
 const q=val('qty');
 const total=val('total');
-const ship=val('shipping');
+const extra=val('shipping');
 const cod=document.getElementById('method').value==='COD';
-
 const cap=q*UNIT;
-const profit=total-ship-cap;
+const profit=cod?total-cap:total-extra-cap;
 
 document.getElementById('previewCapital').textContent=rupiah(cap);
 document.getElementById('previewProfit').textContent=rupiah(profit);
-
 document.getElementById('previewRule').textContent=
-cod?'Estimasi laba: total COD − ongkir − modal barang.':'Estimasi laba: nominal transfer produk − ongkir − modal barang.';
+cod?'Pencairan COD − modal barang. Tagihan penerima tidak dikurangi.':
+'Nominal transfer − ongkir − modal barang.';
 }
 
 ['qty','method'].forEach(id=>{
@@ -301,7 +299,8 @@ date:document.getElementById('saleDate').value,
 qty:val('qty'),
 method,
 total:val('total'),
-shipping:val('shipping'),
+shipping:method==='TF'?val('shipping'):0,
+recipientBill:method==='COD'?val('shipping'):null,
 status,
 note:document.getElementById('note').value.trim(),
 capital:val('qty')*UNIT
@@ -317,7 +316,6 @@ document.getElementById('total').value='';
 document.getElementById('shipping').value='Rp 0';
 
 updateMethod();
-
 alert('Penjualan tersimpan.');
 showTab('history');
 });
@@ -334,10 +332,8 @@ amount:val('expenseAmount')
 
 save();
 e.target.reset();
-
 document.getElementById('expenseDate').value=today;
 document.getElementById('expenseAmount').value='';
-
 alert('Pengeluaran tersimpan.');
 showTab('history');
 });
@@ -351,14 +347,25 @@ function revenue(s){
 return s.status==='success'?s.total:0;
 }
 
+/* Kompatibilitas transaksi lama:
+   COD lama masih memakai total COD dikurangi ongkir lama dan modal.
+   COD baru memakai pencairan COD dikurangi modal saja.
+*/
 function profit(s){
-return s.status==='success'?s.total-s.shipping-s.capital:0;
+if(s.status!=='success')return 0;
+
+if(s.method==='COD'){
+if(s.recipientBill!==undefined){
+return s.total-s.capital;
+}
+return s.total-s.shipping-s.capital;
+}
+return s.total-s.shipping-s.capital;
 }
 
 function render(){
-
 const received=db.sales.reduce((a,s)=>a+revenue(s),0);
-const pending=db.sales.filter(s=>s.status==='pending').reduce((a,s)=>a+s.total,0);
+const pending=db.sales.filter(s=>s.status==='pending').reduce((a,s)=>a+revenuePending(s),0);
 const capital=db.sales.filter(s=>s.status==='success').reduce((a,s)=>a+s.capital,0);
 const other=db.expenses.reduce((a,x)=>a+x.amount,0);
 const p=db.sales.reduce((a,s)=>a+profit(s),0)-other;
@@ -371,36 +378,39 @@ document.getElementById('salesCount').textContent=db.sales.length;
 document.getElementById('otherExpense').textContent=rupiah(other);
 
 document.getElementById('salesList').innerHTML=db.sales.length?
-db.sales.map(s=>`
+db.sales.map(s=>{
+const oldCod=s.method==='COD'&&s.recipientBill===undefined;
+const shownProfit=profit({...s,status:'success'});
+return `
 <div class="item">
 <div class="itemtop">
 <strong>${esc(s.buyer)} · ${s.qty} pcs</strong>
 <span class="pill ${s.status}">${s.status==='success'?'Berhasil':s.status==='pending'?'Pending':'Gagal'}</span>
 </div>
-<div class="meta">${s.date} · ${s.method} · Total ${rupiah(s.total)} · Ongkir ${rupiah(s.shipping)} · Modal ${rupiah(s.capital)}</div>
-<div class="meta">Laba jika berhasil: ${rupiah(s.total-s.shipping-s.capital)} ${s.note?'· '+esc(s.note):''}</div>
+<div class="meta">${s.date} · ${s.method} · ${s.method==='COD'?'Pencairan COD':'Transfer'} ${rupiah(s.total)} · ${s.method==='COD'?(oldCod?'Data COD lama · ':'Tagihan penerima ')+(oldCod?rupiah(s.shipping):rupiah(s.recipientBill||0)):'Ongkir '+rupiah(s.shipping)} · Modal ${rupiah(s.capital)}</div>
+<div class="meta">Laba jika berhasil: ${rupiah(shownProfit)} ${s.note?'· '+esc(s.note):''}</div>
 <div class="actions">
 ${s.status!=='success'?`<button class="smallbtn" onclick="setStatus('${s.id}','success')">Tandai berhasil</button>`:''}
 ${s.status!=='pending'?`<button class="smallbtn" onclick="setStatus('${s.id}','pending')">Jadikan pending</button>`:''}
 ${s.status!=='failed'?`<button class="smallbtn" onclick="setStatus('${s.id}','failed')">Tandai gagal</button>`:''}
 <button class="smallbtn" onclick="removeSale('${s.id}')">Hapus</button>
 </div>
-</div>`).join(''):
+</div>`;
+}).join(''):
 '<div class="empty">Belum ada penjualan.</div>';
 
 document.getElementById('expensesList').innerHTML=db.expenses.length?
 db.expenses.map(x=>`
 <div class="item">
-<div class="itemtop">
-<strong>${esc(x.name)}</strong>
-<strong class="red">${rupiah(x.amount)}</strong>
-</div>
+<div class="itemtop"><strong>${esc(x.name)}</strong><strong class="red">${rupiah(x.amount)}</strong></div>
 <div class="meta">${x.date}</div>
-<div class="actions">
-<button class="smallbtn" onclick="removeExpense('${x.id}')">Hapus</button>
-</div>
+<div class="actions"><button class="smallbtn" onclick="removeExpense('${x.id}')">Hapus</button></div>
 </div>`).join(''):
 '<div class="empty">Belum ada pengeluaran lain.</div>';
+}
+
+function revenuePending(s){
+return s.status==='pending'?s.total:0;
 }
 
 function esc(s){
@@ -429,18 +439,18 @@ save();
 }
 
 document.getElementById('exportBtn').onclick=()=>{
-let rows=[['Jenis','Tanggal','Nama/Keterangan','Metode','Status','Jumlah pcs','Total pembayaran','Ongkir','Modal barang','Laba terealisasi']];
+let rows=[['Jenis','Tanggal','Nama/Keterangan','Metode','Status','Jumlah pcs','Pencairan/Transfer','Ongkir','Tagihan Penerima','Modal barang','Laba terealisasi']];
 
 db.sales.forEach(s=>rows.push([
-'Penjualan',s.date,s.buyer,s.method,s.status,s.qty,s.total,s.shipping,s.capital,profit(s)
+'Penjualan',s.date,s.buyer,s.method,s.status,s.qty,s.total,
+s.shipping,s.recipientBill??'',s.capital,profit(s)
 ]));
 
 db.expenses.forEach(x=>rows.push([
-'Pengeluaran',x.date,x.name,'','','',x.amount,0,0,-x.amount
+'Pengeluaran',x.date,x.name,'','','',x.amount,0,'',0,-x.amount
 ]));
 
 const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');
-
 download(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'laporan_nonitrend.csv');
 };
 
@@ -451,21 +461,13 @@ download(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),'backup
 document.getElementById('restoreFile').onchange=async e=>{
 const f=e.target.files[0];
 if(!f)return;
-
 try{
 const d=JSON.parse(await f.text());
-
 if(!Array.isArray(d.sales)||!Array.isArray(d.expenses))throw 0;
-
 if(confirm('Pulihkan backup? Data saat ini akan diganti.')){
-db=d;
-save();
-alert('Backup berhasil dipulihkan.');
+db=d;save();alert('Backup berhasil dipulihkan.');
 }
-}catch(_){
-alert('File backup tidak valid.');
-}
-
+}catch(_){alert('File backup tidak valid.')}
 e.target.value='';
 };
 
@@ -485,4 +487,4 @@ updateMethod();
 render();
 </script>
 </body>
-</html>
+  </html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,56 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Keuangan NONITREND</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--g:#176b45;--gl:#eaf5ee;--bg:#f4f7f5;--line:#e2e9e4;--text:#1b2921;--muted:#718078;--red:#bd3939}
+:root{
+--g:#176b45;
+--gl:#eaf5ee;
+--bg:#f4f7f5;
+--line:#e2e9e4;
+--text:#1b2921;
+--muted:#718078;
+--red:#bd3939
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{background:var(--g);color:white;padding:24px 18px;border-radius:0 0 22px 22px}
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif
+}
+header{
+background:var(--g);
+color:white;
+padding:24px 18px;
+border-radius:0 0 22px 22px
+}
 header h2{margin:0;font-size:22px}
 header p{margin:7px 0 0;font-size:13px;opacity:.85}
 main{max-width:760px;margin:auto;padding:15px}
-.panel,.card{background:white;border:1px solid var(--line);border-radius:15px;padding:16px}
+.panel,.card{
+background:white;
+border:1px solid var(--line);
+border-radius:15px;
+padding:16px
+}
 .panel{margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:11px
+}
 .card{min-width:0}
-.card.shipping{grid-column:1/-1;background:var(--gl);border-color:#d5e9dc}
+.card.shipping{
+grid-column:1/-1;
+background:var(--gl);
+border-color:#d5e9dc
+}
 .small{font-size:12px;color:var(--muted)}
-.amount{font-size:clamp(17px,4vw,22px);font-weight:bold;margin-top:9px;overflow-wrap:anywhere}
+.amount{
+font-size:clamp(17px,4vw,22px);
+font-weight:bold;
+margin-top:9px;
+overflow-wrap:anywhere
+}
 .green{color:var(--g)}
 .red{color:var(--red)}
-nav{display:flex;gap:8px;overflow-x:auto;margin:16px 0;padding-bottom:3px}
-button{border:1px solid var(--line);background:white;color:var(--text);border-radius:10px;padding:11px 14px;font-weight:bold;cursor:pointer;white-space:nowrap}
-button.primary{width:100%;background:var(--g);color:white;border:0;margin-top:15px}
+nav{
+display:flex;
+gap:8px;
+overflow-x:auto;
+margin:16px 0;
+padding-bottom:3px
+}
+button{
+border:1px solid var(--line);
+background:white;
+color:var(--text);
+border-radius:10px;
+padding:11px 14px;
+font-weight:bold;
+cursor:pointer;
+white-space:nowrap
+}
+button.primary{
+width:100%;
+background:var(--g);
+color:white;
+border:0;
+margin-top:15px
+}
 nav button.active{background:var(--g);color:white}
-input,select{width:100%;padding:12px;border:1px solid #ccd8d0;border-radius:9px;background:white;font-size:15px}
-label{display:block;font-size:13px;font-weight:bold;margin:13px 0 6px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item{border-top:1px solid var(--line);padding:14px 0}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+input,select{
+width:100%;
+padding:12px;
+border:1px solid #ccd8d0;
+border-radius:9px;
+background:white;
+font-size:15px
+}
+label{
+display:block;
+font-size:13px;
+font-weight:bold;
+margin:13px 0 6px
+}
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
+.item{
+border-top:1px solid var(--line);
+padding:14px 0
+}
+.actions{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-top:9px
+}
 .hidden{display:none!important}
-.muted-box{background:#f5f8f6;border-radius:10px;padding:12px;margin-top:12px}
-hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-@media(max-width:380px){main{padding:10px}.panel,.card{padding:12px}.grid{gap:8px}}
+.muted-box{
+background:#f5f8f6;
+border-radius:10px;
+padding:12px;
+margin-top:12px
+}
+hr{
+border:0;
+border-top:1px solid var(--line);
+margin:20px 0
+}
+@media(max-width:380px){
+main{padding:10px}
+.panel,.card{padding:12px}
+.grid{gap:8px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h2>HERBAL.BDG · NONITREND</h2>
 <p>Dashboard Keuangan Penjualan</p>
 </header>
 
 <main>
+
 <section id="login" class="panel">
 <h3>Login NONITREND</h3>
+
 <label>Email</label>
 <input id="email" type="email" placeholder="Email akun" autocomplete="username">
+
 <label>Password</label>
 <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+
 <button class="primary" id="loginBtn">MASUK</button>
 <p id="loginMsg" class="small"></p>
 </section>
 
 <section id="app" class="hidden">
+
 <div class="panel">
 <div class="row">
 <div>
@@ -67,27 +168,36 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 </div>
 
 <div class="grid">
+
 <div class="card">
 <div class="small">Uang diterima</div>
 <div class="amount green" id="received">Rp0</div>
 </div>
+
 <div class="card">
 <div class="small">COD pending</div>
 <div class="amount" id="pending">Rp0</div>
 </div>
+
 <div class="card">
 <div class="small">Modal barang terjual</div>
 <div class="amount" id="capital">Rp0</div>
 </div>
+
 <div class="card">
 <div class="small">Profit Bersih</div>
 <div class="amount green" id="profit">Rp0</div>
 </div>
+
 <div class="card shipping">
 <div class="small">Total Belanja Ongkir · TF + COD</div>
 <div class="amount" id="totalShipping">Rp0</div>
-<div class="small">Akumulasi ongkir TF dan selisih tagihan-pencairan COD. Transaksi gagal tidak dihitung.</div>
+<div class="small">
+Akumulasi ongkir TF dan selisih tagihan-pencairan COD.
+Transaksi gagal tidak dihitung.
 </div>
+</div>
+
 </div>
 
 <nav>
@@ -100,125 +210,255 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 <section id="history" class="panel tab">
 <h3>Riwayat Penjualan</h3>
 <div id="salesList"></div>
+
 <hr>
+
 <h3>Riwayat Pengeluaran</h3>
 <div id="expenseList"></div>
 </section>
 
 <section id="sale" class="panel tab hidden">
+
 <h3>Catat Penjualan</h3>
+
 <form id="saleForm">
+
+<label>Produk</label>
+<select id="product">
+<option value="nonitrend">
+NONITREND — Modal Rp170.000/pcs
+</option>
+<option value="paket">
+NONITREND + ZIANG ZE TEA — Modal Rp290.000/paket
+</option>
+</select>
+
 <label>Nama Pembeli</label>
 <input id="buyer" required>
+
 <div class="row">
 <div>
 <label>Tanggal</label>
 <input id="saleDate" type="date" required>
 </div>
+
 <div>
-<label>Jumlah Barang</label>
+<label>Jumlah Paket/Barang</label>
 <input id="qty" type="number" min="1" step="1" value="1" required>
 </div>
 </div>
+
+<div class="muted-box small" id="capitalPreview">
+Modal produk: Rp170.000 × 1 = Rp170.000
+</div>
+
 <label>Metode Pembayaran</label>
 <select id="method">
 <option value="TF">Transfer (TF)</option>
 <option value="COD">COD</option>
 </select>
+
 <label id="totalLabel">Nominal Transfer Produk</label>
 <input id="total" type="number" min="0" step="1" required>
+
 <label id="extraLabel">Ongkir Ditanggung Penjual</label>
 <input id="extra" type="number" min="0" step="1" value="0" required>
-<div class="muted-box small" id="saleHint">TF: masukkan nominal transfer dan ongkir yang ditanggung penjual.</div>
+
+<div class="muted-box small" id="saleHint">
+TF: masukkan nominal transfer dan ongkir yang ditanggung penjual.
+</div>
+
 <label>Status</label>
 <select id="status">
 <option value="success">Berhasil</option>
 <option value="pending">Pending</option>
 <option value="failed">Gagal</option>
 </select>
+
 <label>Catatan</label>
 <input id="note">
-<p class="small">Modal otomatis Rp170.000 per pcs. COD: masukkan pencairan COD dan tagihan penerima pada resi. Ongkir COD dihitung otomatis dari selisih keduanya.</p>
+
+<p class="small">
+Modal otomatis mengikuti produk dan jumlah.
+COD: masukkan pencairan COD dan tagihan penerima pada resi.
+Ongkir COD dihitung dari selisih keduanya.
+</p>
+
 <button class="primary" type="submit">SIMPAN PENJUALAN</button>
+
 </form>
 </section>
 
 <section id="expense" class="panel tab hidden">
+
 <h3>Catat Pengeluaran</h3>
+
 <form id="expenseForm">
+
 <label>Keterangan</label>
 <input id="expenseName" required>
+
 <label>Tanggal</label>
 <input id="expenseDate" type="date" required>
+
 <label>Jumlah Rupiah</label>
 <input id="expenseAmount" type="number" min="1" step="1" required>
+
 <button class="primary" type="submit">SIMPAN PENGELUARAN</button>
+
 </form>
 </section>
 
 <section id="backup" class="panel tab hidden">
+
 <h3>Impor Backup Lama</h3>
-<p class="small">Pilih backup_nonitrend.json. Transaksi dengan ID sama tidak akan diimpor dua kali.</p>
+
+<p class="small">
+Pilih backup_nonitrend.json.
+Transaksi dengan ID sama tidak akan diimpor dua kali.
+</p>
+
 <input id="backupFile" type="file" accept=".json">
-<button class="primary" id="importBtn" type="button">IMPOR DATA KE CLOUD</button>
+
+<button class="primary" id="importBtn" type="button">
+IMPOR DATA KE CLOUD
+</button>
+
 <p id="importMsg" class="small"></p>
+
 </section>
+
 </section>
 </main>
 
 <script>
 const URL_SUPABASE='https://dcdvrrjpqckyxhwnmfwb.supabase.co';
+
 const KEY_SUPABASE='sb_publishable_dzBuIb6xgQxnynw9M81LJA_2Jz9mScZ';
+
 const db=window.supabase.createClient(URL_SUPABASE,KEY_SUPABASE);
-const UNIT=170000;
+
+const PRODUCTS={
+nonitrend:{
+name:'NONITREND',
+capital:170000
+},
+paket:{
+name:'NONITREND + ZIANG ZE TEA',
+capital:290000
+}
+};
+
 const $=id=>document.getElementById(id);
+
 const rupiah=n=>'Rp'+Math.round(Number(n)||0).toLocaleString('id-ID');
 
 let user=null,role='staff',sales=[],expenses=[];
 
 const today=()=>{
 const d=new Date();
-return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+return [
+d.getFullYear(),
+String(d.getMonth()+1).padStart(2,'0'),
+String(d.getDate()).padStart(2,'0')
+].join('-');
 };
+
+function getCapital(s){
+if(s.unit_capital!==null&&
+s.unit_capital!==undefined&&
+Number(s.unit_capital)>0){
+return Number(s.unit_capital)*(Number(s.qty)||1);
+}
+
+if(s.capital!==null&&
+s.capital!==undefined&&
+Number(s.capital)>0){
+return Number(s.capital);
+}
+
+return 170000*(Number(s.qty)||1);
+}
+
+function getProductName(s){
+return s.product_name||'NONITREND';
+}
 
 function profit(s){
 if(s.status!=='success')return 0;
-const capital=Number(s.capital)||0;
-if(s.method==='COD')return (Number(s.total)||0)-capital;
-return (Number(s.total)||0)-(Number(s.shipping)||0)-capital;
+
+const capital=getCapital(s);
+
+return s.method==='COD'
+?(Number(s.total)||0)-capital
+:(Number(s.total)||0)-(Number(s.shipping)||0)-capital;
 }
 
 function shippingCost(s){
 if(s.status==='failed')return 0;
+
 if(s.method==='COD'){
-return Math.max(0,(Number(s.recipient_bill)||0)-(Number(s.total)||0));
+return Math.max(
+0,
+(Number(s.recipient_bill)||0)-(Number(s.total)||0)
+);
 }
+
 return Math.max(0,Number(s.shipping)||0);
 }
 
 function esc(v){
 return String(v??'').replace(/[&<>"']/g,c=>({
-'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
 }[c]));
 }
 
 function showTab(id){
-document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==id));
-document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+document.querySelectorAll('.tab')
+.forEach(x=>x.classList.toggle('hidden',x.id!==id));
+
+document.querySelectorAll('nav button')
+.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
 }
 
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+document.querySelectorAll('nav button')
+.forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 
 $('saleDate').value=today();
 $('expenseDate').value=today();
 
+function updateCapitalPreview(){
+const p=PRODUCTS[$('product').value]||PRODUCTS.nonitrend;
+const q=Math.max(1,Number($('qty').value)||1);
+
+$('capitalPreview').textContent=
+`Modal produk: ${rupiah(p.capital)} × ${q} = ${rupiah(p.capital*q)}`;
+}
+
+$('product').onchange=updateCapitalPreview;
+$('qty').oninput=updateCapitalPreview;
+
+updateCapitalPreview();
+
 $('method').onchange=()=>{
 const cod=$('method').value==='COD';
-$('totalLabel').textContent=cod?'Pencairan COD dari Ekspedisi':'Nominal Transfer Produk';
-$('extraLabel').textContent=cod?'Tagihan Penerima pada Resi':'Ongkir Ditanggung Penjual';
+
+$('totalLabel').textContent=cod
+?'Pencairan COD dari Ekspedisi'
+:'Nominal Transfer Produk';
+
+$('extraLabel').textContent=cod
+?'Tagihan Penerima pada Resi'
+:'Ongkir Ditanggung Penjual';
+
 $('saleHint').textContent=cod
 ?'Masukkan pencairan COD yang diterima dan total tagihan pada resi. Selisihnya dihitung sebagai ongkir COD.'
 :'Masukkan nominal transfer dan ongkir yang ditanggung penjual.';
+
 $('status').value=cod?'pending':'success';
 $('extra').value=0;
 };
@@ -228,74 +468,151 @@ const [a,b]=await Promise.all([
 db.from('sales').select('*').order('sale_date',{ascending:false}),
 db.from('expenses').select('*').order('expense_date',{ascending:false})
 ]);
+
 if(a.error)throw a.error;
 if(b.error)throw b.error;
+
 sales=a.data||[];
 expenses=b.data||[];
+
 render();
 }
 
 function render(){
+
 const successful=sales.filter(s=>s.status==='success');
-const received=successful.reduce((t,s)=>t+(Number(s.total)||0),0);
-const pending=sales.filter(s=>s.status==='pending'&&s.method==='COD').reduce((t,s)=>t+(Number(s.total)||0),0);
-const capital=successful.reduce((t,s)=>t+(Number(s.capital)||0),0);
-const expenseTotal=expenses.reduce((t,x)=>t+(Number(x.amount)||0),0);
-const net=sales.reduce((t,s)=>t+profit(s),0)-expenseTotal;
-const ship=sales.reduce((t,s)=>t+shippingCost(s),0);
+
+const received=successful.reduce(
+(t,s)=>t+(Number(s.total)||0),0
+);
+
+const pending=sales.filter(
+s=>s.status==='pending'&&s.method==='COD'
+).reduce(
+(t,s)=>t+(Number(s.total)||0),0
+);
+
+const capital=successful.reduce(
+(t,s)=>t+getCapital(s),0
+);
+
+const expenseTotal=expenses.reduce(
+(t,x)=>t+(Number(x.amount)||0),0
+);
+
+const net=sales.reduce(
+(t,s)=>t+profit(s),0
+)-expenseTotal;
+
+const ship=sales.reduce(
+(t,s)=>t+shippingCost(s),0
+);
 
 $('received').textContent=rupiah(received);
 $('pending').textContent=rupiah(pending);
 $('capital').textContent=rupiah(capital);
 $('profit').textContent=rupiah(net);
+
 $('profit').className='amount '+(net<0?'red':'green');
+
 $('totalShipping').textContent=rupiah(ship);
 
 $('salesList').innerHTML=sales.map(s=>`
 <div class="item">
-<strong>${esc(s.buyer)} · ${Number(s.qty)||0} pcs</strong>
-<div class="small">${esc(s.sale_date)} · ${esc(s.method)} · ${rupiah(s.total)}</div>
-<div class="small">Modal: ${rupiah(s.capital)} · Status: ${esc(s.status)}</div>
-${s.method==='COD'
-?`<div class="small">Tagihan penerima: ${rupiah(s.recipient_bill)} · Pencairan: ${rupiah(s.total)} · Ongkir COD: ${rupiah(shippingCost(s))}</div>`
-:`<div class="small">Ongkir TF: ${rupiah(s.shipping)}</div>`}
-<div class="small">Profit transaksi jika berhasil: ${rupiah(profit({...s,status:'success'}))}</div>
-<div class="actions">
-${s.status!=='success'?`<button type="button" onclick="setStatus('${s.id}','success')">Tandai Berhasil</button>`:''}
-${role==='admin'?`<button type="button" onclick="deleteSale('${s.id}')">Hapus</button>`:''}
+
+<strong>${esc(s.buyer)} · ${Number(s.qty)||0} pcs/paket</strong>
+
+<div>
+<strong>${esc(getProductName(s))}</strong>
 </div>
-</div>`).join('')||'<p class="small">Belum ada penjualan.</p>';
+
+<div class="small">
+${esc(s.sale_date)} · ${esc(s.method)} · ${rupiah(s.total)}
+</div>
+
+<div class="small">
+Modal: ${rupiah(getCapital(s))} · Status: ${esc(s.status)}
+</div>
+
+${s.method==='COD'
+?`<div class="small">
+Tagihan penerima: ${rupiah(s.recipient_bill)}
+· Pencairan: ${rupiah(s.total)}
+· Ongkir COD: ${rupiah(shippingCost(s))}
+</div>`
+:`<div class="small">
+Ongkir TF: ${rupiah(s.shipping)}
+</div>`}
+
+<div class="small">
+Profit transaksi jika berhasil: ${rupiah(profit({...s,status:'success'}))}
+</div>
+
+<div class="actions">
+
+${s.status!=='success'
+?`<button type="button" onclick="setStatus('${s.id}','success')">Tandai Berhasil</button>`
+:''}
+
+${role==='admin'
+?`<button type="button" onclick="deleteSale('${s.id}')">Hapus</button>`
+:''}
+
+</div>
+</div>
+`).join('')||'<p class="small">Belum ada penjualan.</p>';
 
 $('expenseList').innerHTML=expenses.map(x=>`
 <div class="item">
+
 <strong>${esc(x.name)}</strong>
-<div class="small">${esc(x.expense_date)} · ${rupiah(x.amount)}</div>
-${role==='admin'?`<button type="button" onclick="deleteExpense('${x.id}')">Hapus</button>`:''}
-</div>`).join('')||'<p class="small">Belum ada pengeluaran.</p>';
+
+<div class="small">
+${esc(x.expense_date)} · ${rupiah(x.amount)}
+</div>
+
+${role==='admin'
+?`<button type="button" onclick="deleteExpense('${x.id}')">Hapus</button>`
+:''}
+
+</div>
+`).join('')||'<p class="small">Belum ada pengeluaran.</p>';
 }
 
 window.setStatus=async(id,status)=>{
-const {error}=await db.from('sales').update({status,updated_at:new Date().toISOString()}).eq('id',id);
-if(error)alert(error.message);else await loadData();
+const {error}=await db.from('sales')
+.update({status,updated_at:new Date().toISOString()})
+.eq('id',id);
+
+if(error)alert(error.message);
+else await loadData();
 };
 
 window.deleteSale=async id=>{
 if(role!=='admin'||!confirm('Hapus transaksi ini?'))return;
+
 const {error}=await db.from('sales').delete().eq('id',id);
-if(error)alert(error.message);else await loadData();
+
+if(error)alert(error.message);
+else await loadData();
 };
 
 window.deleteExpense=async id=>{
 if(role!=='admin'||!confirm('Hapus pengeluaran ini?'))return;
+
 const {error}=await db.from('expenses').delete().eq('id',id);
-if(error)alert(error.message);else await loadData();
+
+if(error)alert(error.message);
+else await loadData();
 };
 
 $('saleForm').onsubmit=async e=>{
 e.preventDefault();
+
 const cod=$('method').value==='COD';
-const qty=Number($('qty').value);
 const extra=Number($('extra').value)||0;
+const qty=Number($('qty').value);
+const product=PRODUCTS[$('product').value]||PRODUCTS.nonitrend;
 
 if(cod&&extra<Number($('total').value)){
 alert('Tagihan penerima tidak boleh lebih kecil dari pencairan COD. Periksa resi.');
@@ -312,56 +629,96 @@ shipping:cod?0:extra,
 recipient_bill:cod?extra:null,
 status:$('status').value,
 note:$('note').value.trim(),
-capital:qty*UNIT,
+capital:qty*product.capital,
+product_name:product.name,
+unit_capital:product.capital,
 created_by:user.id
 };
 
 const {error}=await db.from('sales').insert(row);
-if(error){alert('Gagal menyimpan: '+error.message);return;}
+
+if(error){
+alert('Gagal menyimpan: '+error.message);
+return;
+}
 
 alert('Penjualan berhasil disimpan.');
+
 e.target.reset();
+
 $('saleDate').value=today();
 $('qty').value=1;
 $('extra').value=0;
+$('product').value='nonitrend';
 $('method').value='TF';
 $('method').onchange();
+updateCapitalPreview();
+
 await loadData();
 showTab('history');
 };
 
 $('expenseForm').onsubmit=async e=>{
 e.preventDefault();
+
 const row={
 name:$('expenseName').value.trim(),
 expense_date:$('expenseDate').value,
 amount:Number($('expenseAmount').value),
 created_by:user.id
 };
+
 const {error}=await db.from('expenses').insert(row);
-if(error){alert(error.message);return;}
+
+if(error){
+alert(error.message);
+return;
+}
+
 alert('Pengeluaran tersimpan.');
+
 e.target.reset();
 $('expenseDate').value=today();
+
 await loadData();
 showTab('history');
 };
 
 $('importBtn').onclick=async()=>{
 const file=$('backupFile').files[0];
-if(!file){$('importMsg').textContent='Pilih file backup dahulu.';return;}
+
+if(!file){
+$('importMsg').textContent='Pilih file backup dahulu.';
+return;
+}
+
 try{
 const backup=JSON.parse(await file.text());
-if(!Array.isArray(backup.sales)||!Array.isArray(backup.expenses))throw new Error('Format backup tidak sesuai.');
+
+if(!Array.isArray(backup.sales)||!Array.isArray(backup.expenses))
+throw new Error('Format backup tidak sesuai.');
 
 const {data:existing,error}=await db.from('sales').select('id');
+
 if(error)throw error;
+
 const ids=new Set((existing||[]).map(x=>x.id));
 
 const rows=backup.sales.filter(s=>!ids.has(s.id)).map(s=>({
-id:s.id,buyer:s.buyer,sale_date:s.date,qty:s.qty,method:s.method,
-total:s.total,shipping:s.shipping||0,recipient_bill:s.recipientBill??null,
-status:s.status,note:s.note||'',capital:s.capital,created_by:user.id
+id:s.id,
+buyer:s.buyer,
+sale_date:s.date,
+qty:s.qty,
+method:s.method,
+total:s.total,
+shipping:s.shipping||0,
+recipient_bill:s.recipientBill??null,
+status:s.status,
+note:s.note||'',
+capital:s.capital,
+product_name:s.product_name||'NONITREND',
+unit_capital:s.unit_capital||170000,
+created_by:user.id
 }));
 
 if(rows.length){
@@ -370,16 +727,24 @@ if(result.error)throw result.error;
 }
 
 let count=0;
+
 for(const x of backup.expenses){
 const {error:e}=await db.from('expenses').insert({
-name:x.name,expense_date:x.date,amount:x.amount,created_by:user.id
+name:x.name,
+expense_date:x.date,
+amount:x.amount,
+created_by:user.id
 });
+
 if(e)throw e;
 count++;
 }
 
-$('importMsg').textContent=`Berhasil mengimpor ${rows.length} penjualan dan ${count} pengeluaran.`;
+$('importMsg').textContent=
+`Berhasil mengimpor ${rows.length} penjualan dan ${count} pengeluaran.`;
+
 await loadData();
+
 }catch(err){
 $('importMsg').textContent='Gagal: '+err.message;
 }
@@ -387,12 +752,19 @@ $('importMsg').textContent='Gagal: '+err.message;
 
 async function enter(session){
 user=session.user;
-const {data,error}=await db.from('profiles').select('role').eq('id',user.id).single();
+
+const {data,error}=await db.from('profiles')
+.select('role')
+.eq('id',user.id)
+.single();
+
 if(error)throw error;
 
 role=data.role;
+
 $('login').classList.add('hidden');
 $('app').classList.remove('hidden');
+
 $('userEmail').textContent=user.email;
 $('userRole').textContent=role==='admin'?'ADMIN':'STAFF';
 
@@ -406,13 +778,22 @@ db.channel('nonitrend-live')
 
 $('loginBtn').onclick=async()=>{
 $('loginMsg').textContent='Memeriksa akun...';
+
 const {data,error}=await db.auth.signInWithPassword({
 email:$('email').value.trim(),
 password:$('password').value
 });
-if(error){$('loginMsg').textContent=error.message;return;}
-try{await enter(data.session);}
-catch(e){$('loginMsg').textContent='Gagal memuat data: '+e.message;}
+
+if(error){
+$('loginMsg').textContent=error.message;
+return;
+}
+
+try{
+await enter(data.session);
+}catch(e){
+$('loginMsg').textContent='Gagal memuat data: '+e.message;
+}
 };
 
 $('logoutBtn').onclick=async()=>{
@@ -422,10 +803,13 @@ location.reload();
 
 db.auth.getSession().then(async({data})=>{
 if(data.session){
-try{await enter(data.session);}
-catch(e){$('loginMsg').textContent=e.message;}
+try{
+await enter(data.session);
+}catch(e){
+$('loginMsg').textContent=e.message;
+}
 }
 });
 </script>
 </body>
-</html>
+  </html>
